@@ -1,21 +1,14 @@
 package weather
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type Weather struct {
 	Id          int
 	Main        string
 	Description string
 	Icon        string
-}
-
-func iconCodeToInt(iconCode string) int64 {
-	code, err := strconv.ParseInt(iconCode[0:2], 10, 32)
-	if err != nil {
-		return -1
-	}
-
-	return code
 }
 
 func GetIcon(weather *Weather) string {
@@ -41,4 +34,17 @@ func GetIcon(weather *Weather) string {
 		default:
 			return "❔"
 	}
+}
+
+func iconCodeToInt(iconCode string) int64 {
+	if len(iconCode) != 3 {
+		return -1
+	}	
+
+	code, err := strconv.ParseInt(iconCode[0:2], 10, 32)
+	if err != nil {
+		return -1
+	}
+
+	return code
 }
