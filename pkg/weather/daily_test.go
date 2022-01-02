@@ -1,27 +1,30 @@
-package weather
+package weather_test
 
-import "testing"
+import (
+	"testing"
+	"wterm/pkg/weather"
+)
 
-func makeDaily() Daily {
-	temp := Temperature{132.3, 132.3, 132.3, 132.3, 132.3, 132.3}
-	w := Weather{500, "Rain", "slight rain", "09d"}
-	weather := []Weather{w}
+func makeDaily() weather.Daily {
+	temp := weather.Temperature{132.3, 132.3, 132.3, 132.3, 132.3, 132.3}
+	w := weather.Weather{500, "Rain", "slight rain", "09d"}
+	weatherData := []weather.Weather{w}
 
-	return Daily{
+	return weather.Daily{
 		1640955380,
 		1640955380,
 		1640955380,
 		1640955380,
 		0.86,
 		temp,
-		weather,
+		weatherData,
 	}
 }
 
-var testDaily Daily = makeDaily()
+var testDaily weather.Daily = makeDaily()
 
 func TestGetWeekDay(t *testing.T) {
-	got := GetWeekDay(&testDaily)
+	got := testDaily.GetWeekDay()
 	want := "Friday"
 
 	if got != want {
@@ -30,7 +33,7 @@ func TestGetWeekDay(t *testing.T) {
 }
 
 func TestGetDate(t *testing.T) {
-	got := GetDate(&testDaily)
+	got := testDaily.GetDate()
 	want := "Friday - Dec 31 2021"
 
 	if got != want {

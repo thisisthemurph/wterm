@@ -1,6 +1,9 @@
-package weather
+package weather_test
 
-import "testing"
+import (
+	"testing"
+	weather "wterm/pkg/weather"
+)
 
 func TestGetIcon(t *testing.T) {
 	t.Run("various icon codes", func(t *testing.T) {
@@ -8,7 +11,7 @@ func TestGetIcon(t *testing.T) {
 		wantItems := [5]string{"🌞", "🌞", "🌧️", "❄️", "🌫️"}
 	
 		for index, weather := range weatherItems {
-			got := GetIcon(&weather)
+			got := weather.GetIcon()
 			want := wantItems[index]
 			assertIcon(t, got, want)
 		}
@@ -17,7 +20,7 @@ func TestGetIcon(t *testing.T) {
 	t.Run("unknown icon code", func(t *testing.T) {
 		weather := makeWeather("00d")
 
-		got := GetIcon(&weather)
+		got := weather.GetIcon()
 		want := "❔"
 		assertIcon(t, got, want)
 	})
@@ -25,27 +28,27 @@ func TestGetIcon(t *testing.T) {
 	t.Run("empty stringcode", func(t *testing.T) {
 		weather := makeWeather("")
 
-		got := GetIcon(&weather)
+		got := weather.GetIcon()
 		want := "❔"
 		assertIcon(t, got, want)
 	})
 }
 
-func makeWeather(icon string) Weather {
-	return Weather{
+func makeWeather(iconCode string) weather.Weather {
+	return weather.Weather{
 		500,
 		"Rain",
 		"slight rain",
-		icon,
+		iconCode,
 	}
 }
 
-func weatherFactory() []Weather {
+func weatherFactory() []weather.Weather {
 	codes := []string{"01d", "01n", "09d", "13d", "50n"}
 	
-	var wetherItems []Weather
-	for _, code := range codes {
-		wetherItems = append(wetherItems, makeWeather(code))
+	var wetherItems []weather.Weather
+	for _, iconCode := range codes {
+		wetherItems = append(wetherItems, makeWeather(iconCode))
 	}
 
 	return wetherItems

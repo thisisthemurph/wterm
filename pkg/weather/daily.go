@@ -12,11 +12,11 @@ type Daily struct {
 	Weather    []Weather
 }
 
-func GetWeekDay(dailWeather *Daily) string {
-	return time.Unix(dailWeather.Dt, 0).Weekday().String()
+func (d *Daily) GetWeekDay() string {
+	return time.Unix(d.Dt, 0).Weekday().String()
 }
 
-func GetDate(dailyWeather *Daily) string {
-	t := time.Unix(dailyWeather.Dt, 0)
+func (d *Daily) GetDate() string {
+	t := time.Unix(d.Dt, 0)
 	return t.Format("Monday - Jan _2 2006")
 }

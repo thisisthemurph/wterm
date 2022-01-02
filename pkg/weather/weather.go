@@ -11,8 +11,8 @@ type Weather struct {
 	Icon        string
 }
 
-func GetIcon(weather *Weather) string {
-	code := iconCodeToInt(weather.Icon)
+func (w *Weather) GetIcon() string {
+	code := iconCodeToInt(w.Icon)
 
 	switch code {
 		case 1:

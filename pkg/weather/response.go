@@ -27,12 +27,12 @@ func PrintDailyTable(weatherData *WeatherResponse) {
 		},
 	}
 	
-	fmt.Printf("Date: %s\n", GetDate(&weatherData.Daily[0]))
+	fmt.Printf("Date: %s\n", weatherData.Daily[0].GetDate())
 	for _, day := range weatherData.Daily {
-		weekDay := GetWeekDay(&day)
+		weekDay := day.GetWeekDay()
 
 		for _, daily := range day.Weather {
-			emoji := GetIcon(&daily)
+			emoji := daily.GetIcon()
 			row := []*simpletable.Cell{
 				{Text: weekDay},
 				{Text: emoji, Align: simpletable.AlignCenter},
